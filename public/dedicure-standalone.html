@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dedicure — Dashboard (Standalone)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--green-50:#E8F7F1;--green-400:#1A9E72;--green-600:#0D6E4E;--green-800:#074D37;--blue-50:#EAF2FD;--blue-400:#3B8FE8;--blue-600:#1A5FBA;--red-50:#FEF0F0;--red-400:#E84040;--red-600:#B02020;--amber-50:#FEF5E7;--amber-400:#F0A020;--amber-600:#9A6010;--purple-50:#F2EFFD;--gray-50:#F6F5F2;--gray-100:#ECEAE5;--gray-200:#D4D2CB;--gray-400:#8A887F;--gray-600:#5A584F;--gray-800:#2A2924;--bg:#F2F0EC;--surface:#FFFFFF;--border:rgba(0,0,0,0.07);--border-md:rgba(0,0,0,0.12);--text:#18180F;--text2:#5A584F;--text3:#9A9890;--accent:#0D6E4E;--accent-light:#E8F7F1;--r:10px;--rl:14px;--shadow-xs:0 1px 2px rgba(0,0,0,0.06);--shadow-sm:0 1px 4px rgba(0,0,0,0.08),0 1px 2px rgba(0,0,0,0.04);--font:'Instrument Sans',sans-serif;--mono:'DM Mono',monospace;--serif:'Instrument Serif',serif;--sw:240px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--font);font-size:13px;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+.app{display:flex;height:100vh;overflow:hidden}
+.sidebar{width:var(--sw);min-width:var(--sw);background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.sb-logo{padding:18px 16px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);flex-shrink:0}
+.logo-mark{width:36px;height:36px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-size:18px;font-family:var(--serif);font-style:italic;flex-shrink:0}
+.logo-txt{font-size:16px;font-weight:600;letter-spacing:-0.4px}
+.logo-sub{font-size:10px;color:var(--text3);font-weight:400}
+.sb-sec{padding:14px 16px 4px;font-size:9px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em}
+.nav{display:flex;align-items:center;gap:9px;padding:7px 10px;margin:1px 6px;border-radius:8px;cursor:pointer;font-size:12.5px;color:var(--text2);transition:all .1s;user-select:none}
+.nav:hover{background:var(--gray-50);color:var(--text)}
+.nav.active{background:var(--accent-light);color:var(--accent);font-weight:600}
+.nbadge{margin-left:auto;font-size:9px;font-weight:600;padding:1px 5px;border-radius:10px;background:var(--red-400);color:white}
+.nbadge.g{background:var(--green-400)}.nbadge.b{background:var(--blue-600)}
+.sb-foot{margin-top:auto;padding:10px 6px;border-top:1px solid var(--border);flex-shrink:0}
+.av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.av-g{background:var(--green-50);color:var(--green-600)}.av-b{background:var(--blue-50);color:var(--blue-600)}.av-a{background:var(--amber-50);color:var(--amber-600)}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 22px;height:54px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.tb-title{font-size:15px;font-weight:600;letter-spacing:-.3px;display:flex;align-items:center;gap:8px;flex:1}
+.tb-sub{font-size:11px;color:var(--text3);margin-top:1px}
+.live-pill{display:inline-flex;align-items:center;gap:4px;background:var(--green-50);color:var(--green-600);font-size:9px;font-weight:700;padding:2px 7px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em}
+.live-dot{width:5px;height:5px;border-radius:50%;background:var(--green-400);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;border-radius:8px;border:1px solid var(--border-md);background:var(--surface);color:var(--text);font-family:var(--font);font-size:12px;font-weight:500;cursor:pointer;transition:all .1s;white-space:nowrap}
+.btn:hover{background:var(--gray-50)}.btn:active{transform:scale(.98)}
+.btn-p{background:var(--accent);color:white;border-color:var(--accent)}.btn-p:hover{background:var(--green-800)}
+.btn-sm{padding:4px 10px;font-size:11px;border-radius:6px}
+.sel{padding:6px 11px;border-radius:8px;border:1px solid var(--border-md);background:var(--surface);color:var(--text);font-family:var(--font);font-size:12px;cursor:pointer;outline:none}
+.content{flex:1;overflow-y:auto;padding:18px 22px;animation:fadeIn .15s ease}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:16px 18px;box-shadow:var(--shadow-sm)}
+.card-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
+.card-t{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.08em}
+.sec-t{font-size:14px;font-weight:600;letter-spacing:-.2px}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin-bottom:16px}
+.row{display:flex;gap:14px;margin-bottom:16px}
+.grow{flex:1;min-width:0}.fixed{flex-shrink:0}
+.metric{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:13px 15px;box-shadow:var(--shadow-xs)}
+.m-lbl{font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px}
+.m-val{font-size:22px;font-weight:600;letter-spacing:-.5px;line-height:1}
+.m-sub{font-size:11px;color:var(--text3);margin-top:4px}
+.up{color:var(--green-400)}.dn{color:var(--red-400)}.warn{color:var(--amber-400)}
+.badge{display:inline-flex;align-items:center;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:600;white-space:nowrap}
+.bg{background:var(--green-50);color:var(--green-600)}.br{background:var(--red-50);color:var(--red-600)}.ba{background:var(--amber-50);color:var(--amber-600)}.bb{background:var(--blue-50);color:var(--blue-600)}
+.pw{background:var(--gray-100);border-radius:4px;overflow:hidden}
+.pf{height:100%;border-radius:4px;transition:width .4s ease}
+.pf-g{background:var(--green-400)}.pf-r{background:var(--red-400)}.pf-a{background:var(--amber-400)}
+.alert{display:flex;gap:9px;align-items:flex-start;padding:10px 13px;border-radius:var(--r);margin-bottom:8px;font-size:12px;line-height:1.5}
+.al-w{background:var(--amber-50);border:1px solid rgba(240,160,32,.3);color:var(--amber-600)}
+.al-d{background:var(--red-50);border:1px solid rgba(232,64,64,.3);color:var(--red-600)}
+.al-i{background:var(--blue-50);border:1px solid rgba(59,143,232,.3);color:var(--blue-600)}
+.al-s{background:var(--green-50);border:1px solid rgba(26,158,114,.3);color:var(--green-600)}
+.divider{height:1px;background:var(--border);margin:12px 0}
+.fin-r{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px}
+.fin-r:last-child{border-bottom:none}
+.slot{padding:6px 9px;border-radius:6px;margin-bottom:5px;border-left:3px solid}
+.slot-g{border-color:var(--green-400);background:var(--green-50)}.slot-b{border-color:var(--blue-400);background:var(--blue-50)}.slot-a{border-color:var(--amber-400);background:var(--amber-50)}.slot-r{border-color:var(--red-400);background:var(--red-50)}
+.subtabs{display:flex;gap:2px}
+.stab{padding:4px 11px;border-radius:6px;font-size:11px;cursor:pointer;color:var(--text3);font-weight:500;transition:all .1s}
+.stab:hover{background:var(--gray-50);color:var(--text)}.stab.active{background:var(--gray-100);color:var(--text)}
+.ai-card{background:var(--accent-light);border:1px solid rgba(26,158,114,.2);border-radius:var(--rl);padding:16px 18px;margin-bottom:16px}
+.ai-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ai-icon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-size:16px;flex-shrink:0}
+.ai-title{font-size:13px;font-weight:600;color:var(--accent)}.ai-sub{font-size:11px;color:var(--green-600)}
+.ai-item{display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-bottom:1px solid rgba(26,158,114,.15);font-size:12px;line-height:1.5;color:var(--green-800)}
+.ai-item:last-child{border-bottom:none}
+.ai-num{width:20px;height:20px;border-radius:50%;background:var(--accent);color:white;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--gray-200);border-radius:10px}
+</style>
+</head>
+<body>
+<div class="app">
+  <nav class="sidebar">
+    <div class="sb-logo">
+      <div class="logo-mark">D</div>
+      <div><div class="logo-txt">Dedicure</div><div class="logo-sub">Complete DSO Platform</div></div>
+    </div>
+    <div class="sb-sec">Clinical</div>
+    <div class="nav active">Dashboard <span class="nbadge g">AI</span></div>
+    <div class="nav">Morning Huddle</div>
+    <div class="nav">Schedule</div>
+    <div class="nav">Check-In / Check-Out <span class="nbadge b">3</span></div>
+    <div class="nav">Clinical Charting</div>
+    <div class="nav">Perio Charting</div>
+    <div class="nav">Treatment Planning</div>
+    <div class="nav">Patients <span class="nbadge g">12</span></div>
+    <div class="nav">Patient Messaging <span class="nbadge">7</span></div>
+    <div class="nav">Lab Cases <span class="nbadge b">8</span></div>
+    <div class="nav">Recall &amp; Recare <span class="nbadge">47</span></div>
+    <div class="nav">Referrals</div>
+    <div class="sb-sec">Revenue Cycle</div>
+    <div class="nav">Billing &amp; Claims</div>
+    <div class="nav">Insurance Eligibility</div>
+    <div class="nav">Pre-Authorization</div>
+    <div class="sb-sec">Operations</div>
+    <div class="nav">Analytics</div>
+    <div class="nav">Goals &amp; Benchmarks</div>
+    <div class="nav">Staffing &amp; Scheduling</div>
+    <div class="nav">Provider Compensation</div>
+    <div class="nav">Inventory</div>
+    <div class="nav">Offices &amp; Locations</div>
+    <div class="sb-sec">Growth</div>
+    <div class="nav">Marketing &amp; Reviews</div>
+    <div class="nav">Reports</div>
+    <div class="nav">Call Center</div>
+    <div class="sb-sec">AI Suite</div>
+    <div class="nav">AI Command Center</div>
+    <div class="nav">AI Transcription</div>
+    <div class="nav">AI Marketing</div>
+    <div class="nav">AI Forecasting</div>
+    <div class="nav">AI Treatment Advisor</div>
+    <div class="nav">AI Analytics</div>
+    <div class="sb-foot">
+      <div style="display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:8px;cursor:pointer">
+        <div class="av av-g">HS</div>
+        <div><div style="font-size:11.5px;font-weight:600">Hammaad Salik</div><div style="font-size:9px;color:var(--text3)">Super Admin · All Offices</div></div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main">
+    <header class="topbar">
+      <div style="flex:1;min-width:0">
+        <div class="tb-title"><span class="live-pill"><span class="live-dot"></span>Live</span>Production Dashboard</div>
+        <div class="tb-sub">March 2026 · Trinity Dental Centers · All Offices</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-shrink:0">
+        <select class="sel" style="font-size:11px"><option>All Offices</option><option selected>Trinity Sealy Dental</option><option>Main Office</option><option>North Campus</option></select>
+        <button class="btn btn-sm">&#8595; Export</button>
+        <button class="btn btn-sm btn-p">&#10022; AI Coach</button>
+      </div>
+    </header>
+
+    <div class="content">
+      <!-- AI Coach Panel -->
+      <div class="ai-card">
+        <div class="ai-head">
+          <div class="ai-icon">&#10022;</div>
+          <div>
+            <div class="ai-title">AI Production Coach &mdash; Today&rsquo;s Action Plan</div>
+            <div class="ai-sub">Sunday Mar 15 &middot; Based on your schedule, recall data &amp; production gaps</div>
+          </div>
+          <span class="badge bg" style="margin-left:auto">Updated 7:32 AM</span>
+        </div>
+        <div class="ai-item"><div class="ai-num">1</div><div><strong>Call Carlos Mendez (713-555-0156)</strong> &mdash; 9-month recall overdue, previously a SRP candidate. Scheduling him = $620 + potential crown on #30. Best call window: before 10 AM.</div></div>
+        <div class="ai-item"><div class="ai-num">2</div><div><strong>Fill 11 AM open slot on Chair 2</strong> &mdash; 3 patients on your waitlist want this time. Linda Torres is #1 match (cleaning, 10 min drive away, replied &ldquo;yes&rdquo; to last text). One click to book.</div></div>
+        <div class="ai-item"><div class="ai-num">3</div><div><strong>Refile Claim #4821 (Marcus Webb, $1,240)</strong> &mdash; Cigna denied D2750 for missing pre-op X-ray. Attach D0220 from Feb 12 and refile today. Filing deadline in 9 days.</div></div>
+        <div class="ai-item"><div class="ai-num">4</div><div><strong>Order PPE supplies now</strong> &mdash; Nitrile Gloves (L) have 2 boxes remaining. At current usage you run out in 3 days. Patterson order ships same-day before noon.</div></div>
+        <div class="ai-item"><div class="ai-num">5</div><div><strong>Verify insurance for tomorrow&rsquo;s 9 patients</strong> &mdash; 4 of 9 have not been verified for benefits this year. Run eligibility batch now to prevent day-of surprises.</div></div>
+      </div>
+
+      <!-- Metrics Row 1 -->
+      <div class="g4">
+        <div class="metric"><div class="m-lbl">Production MTD</div><div class="m-val">$22,718</div><div class="m-sub dn">&#9660; 35% to $64k goal</div></div>
+        <div class="metric"><div class="m-lbl">Collections MTD</div><div class="m-val">$19,440</div><div class="m-sub up">&#9650; 88.5% rate</div></div>
+        <div class="metric"><div class="m-lbl">Patients Seen MTD</div><div class="m-val">142</div><div class="m-sub up">&#9650; +12 vs last month</div></div>
+        <div class="metric"><div class="m-lbl">Today&rsquo;s Production</div><div class="m-val">$2,840</div><div class="m-sub">of $4,820 scheduled</div></div>
+      </div>
+      <!-- Metrics Row 2 -->
+      <div class="g4">
+        <div class="metric"><div class="m-lbl">New Patients MTD</div><div class="m-val">23</div><div class="m-sub up">&#9650; +5 vs last month</div></div>
+        <div class="metric"><div class="m-lbl">Treatment Accept Rate</div><div class="m-val">74%</div><div class="m-sub up">&#9650; +3% vs avg</div></div>
+        <div class="metric"><div class="m-lbl">Recall Rate</div><div class="m-val">62%</div><div class="m-sub dn">&#9660; target 75%</div></div>
+        <div class="metric"><div class="m-lbl">Outstanding A/R</div><div class="m-val">$28,420</div><div class="m-sub dn">7 denied claims</div></div>
+      </div>
+
+      <!-- DSO Calendar + Today's Schedule -->
+      <div class="row">
+        <div class="card grow" style="flex:2;padding:0;overflow:hidden;background:#f8f7f4;border:1px solid rgba(0,0,0,.09)">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 16px 10px;border-bottom:1px solid rgba(0,0,0,.07);background:#fff">
+            <span style="font-size:12px;font-weight:700;letter-spacing:.06em;color:#18180f;text-transform:uppercase">March 2026 &mdash; DSO Daily Production</span>
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="display:flex;align-items:center;gap:5px;background:#f0fdf4;border:1px solid #86efac;border-radius:6px;padding:3px 10px">
+                <span style="font-size:11px;font-weight:700;color:#15803d">Daily Target: $3,200</span>
+              </div>
+              <span style="display:flex;align-items:center;gap:4px;font-size:10px;color:#5a584f"><span style="width:8px;height:8px;border-radius:50%;background:#16a34a;display:inline-block"></span>At/above target</span>
+              <span style="display:flex;align-items:center;gap:4px;font-size:10px;color:#5a584f"><span style="width:8px;height:8px;border-radius:50%;background:#dc2626;display:inline-block"></span>Below target</span>
+            </div>
+          </div>
+          <div id="dso-cal-dow" style="display:grid;grid-template-columns:repeat(7,1fr);background:#fff;border-bottom:1px solid rgba(0,0,0,.07)"></div>
+          <div id="dso-cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:#e5e3df"></div>
+        </div>
+        <div class="card fixed" style="width:230px">
+          <div class="card-h"><div class="sec-t">Today&rsquo;s Schedule</div><span class="badge ba">3 open</span></div>
+          <div class="slot slot-g"><div style="font-size:9px;color:var(--green-600)">8:00 AM &middot; Arrived</div><div style="font-size:12px;font-weight:600">Sarah Johnson</div><div style="font-size:10px;color:var(--text2)">Cleaning &middot; Dr. Patel &middot; $180</div></div>
+          <div class="slot slot-b"><div style="font-size:9px;color:var(--blue-600)">9:30 AM &middot; Confirmed</div><div style="font-size:12px;font-weight:600">Marcus Webb</div><div style="font-size:10px;color:var(--text2)">Crown Prep #14 &middot; Dr. Lee &middot; $1,240</div></div>
+          <div class="slot slot-a" style="cursor:pointer"><div style="font-size:9px;color:var(--amber-600)">11:00 AM &middot; OPEN SLOT</div><div style="font-size:12px;font-weight:600">&larr; Fill from Waitlist</div><div style="font-size:10px;color:var(--text2)">Chair 2 &middot; 60 min available</div></div>
+          <div class="slot slot-b"><div style="font-size:9px;color:var(--blue-600)">2:00 PM &middot; Confirmed</div><div style="font-size:12px;font-weight:600">Priya Nair</div><div style="font-size:10px;color:var(--text2)">New Patient Exam &middot; Dr. Patel &middot; $250</div></div>
+          <div class="slot slot-r"><div style="font-size:9px;color:var(--red-600)">Recall Alert</div><div style="font-size:12px;font-weight:600">47 Patients Overdue</div><div style="font-size:10px;color:var(--text2)">$16,450 in opportunity</div></div>
+        </div>
+      </div>
+
+      <!-- Alerts + Provider Production -->
+      <div class="row">
+        <div class="card grow">
+          <div class="card-h"><div class="sec-t">Alerts &amp; Actions</div>
+            <div class="subtabs"><div class="stab active">All</div><div class="stab">Clinical</div><div class="stab">Billing</div><div class="stab">Ops</div></div>
+          </div>
+          <div class="alert al-d"><span>&#8855;</span><span><strong>Claim #4821 denied ($1,240)</strong> &mdash; Cigna rejected D2750 for missing pre-op X-ray. Attach D0220 from Feb 12 and refile. Deadline in 9 days. <span style="text-decoration:underline;cursor:pointer;font-weight:600">Fix now &rarr;</span></span></div>
+          <div class="alert al-w"><span>&#9651;</span><span><strong>47 patients overdue for recall</strong> &mdash; $16,450 revenue opportunity. Last batch outreach: Feb 28. <span style="text-decoration:underline;cursor:pointer;font-weight:600">Send batch &rarr;</span></span></div>
+          <div class="alert al-w"><span>&#9661;</span><span><strong>Gloves (L) &amp; Prophy Paste below reorder</strong> &mdash; 3 days of supply remaining. Patterson cutoff: noon today. <span style="text-decoration:underline;cursor:pointer;font-weight:600">Order now &rarr;</span></span></div>
+          <div class="alert al-i"><span>&#9711;</span><span><strong>4 patients tomorrow not yet verified</strong> &mdash; Run eligibility check to prevent day-of denials. <span style="text-decoration:underline;cursor:pointer;font-weight:600">Verify now &rarr;</span></span></div>
+          <div class="alert al-s"><span>&#9733;</span><span><strong>3 new Google reviews this week</strong> &mdash; Avg 4.8&#9733;. Linda Foster left a 5-star review. Reply to maintain ranking.</span></div>
+        </div>
+        <div class="card fixed" style="width:260px">
+          <div class="card-h"><div class="sec-t">Provider Production</div></div>
+          <div id="prov-list"></div>
+          <div class="divider"></div>
+          <div class="card-h" style="margin-bottom:8px"><div class="sec-t">Office Comparison MTD</div></div>
+          <div class="fin-r"><span style="font-size:11px">Trinity Sealy</span><div style="text-align:right"><div style="font-size:12px;font-weight:600">$22,718</div><div style="font-size:9px;color:var(--red-400)">35% to goal</div></div></div>
+          <div class="fin-r"><span style="font-size:11px">Main Office</span><div style="text-align:right"><div style="font-size:12px;font-weight:600">$34,580</div><div style="font-size:9px;color:var(--green-400)">82% to goal</div></div></div>
+          <div class="fin-r"><span style="font-size:11px">North Campus</span><div style="text-align:right"><div style="font-size:12px;font-weight:600">$38,240</div><div style="font-size:9px;color:var(--green-400)">83% to goal</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const DAILY_GOAL = 3200;
+const PROD = {2:4120,3:3840,4:2180,5:3920,6:1840,9:4280,10:3960,11:2840,12:4120,13:3760,16:2840};
+const TODAY_DAY = 16;
+
+function buildCalendar() {
+  const dow = document.getElementById('dso-cal-dow');
+  const grid = document.getElementById('dso-cal-grid');
+  ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d => {
+    const el = document.createElement('div');
+    el.style.cssText = 'text-align:center;padding:6px 0;font-size:9px;font-weight:700;letter-spacing:.06em;color:#9A9890;text-transform:uppercase;';
+    el.textContent = d;
+    dow.appendChild(el);
+  });
+  const firstDay = new Date(2026,2,1).getDay();
+  const daysInMonth = 31;
+  for (let i=0;i<firstDay;i++) {
+    const el = document.createElement('div');
+    el.style.cssText = 'background:#f2f0ec;min-height:68px;';
+    grid.appendChild(el);
+  }
+  for (let d=1;d<=daysInMonth;d++) {
+    const isToday = d === TODAY_DAY;
+    const isFuture = d > TODAY_DAY;
+    const isWeekend = (new Date(2026,2,d).getDay()===0||new Date(2026,2,d).getDay()===6);
+    const prod = PROD[d]||0;
+    const above = prod>=DAILY_GOAL;
+    const el = document.createElement('div');
+    let bg = '#fff';
+    if (isWeekend && !prod) bg = '#f6f5f2';
+    if (isFuture) bg = '#fafaf8';
+    el.style.cssText = `background:${bg};min-height:68px;padding:8px 9px;position:relative;${isToday?'box-shadow:inset 0 0 0 2px #1A9E72;':''}`;
+    const dayEl = document.createElement('div');
+    if (isToday) {
+      dayEl.style.cssText = 'width:20px;height:20px;border-radius:50%;background:#0D6E4E;color:white;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;';
+    } else {
+      dayEl.style.cssText = `font-size:11px;font-weight:${isWeekend?400:500};color:${isWeekend?'#9A9890':'#18180F'};`;
+    }
+    dayEl.textContent = d;
+    el.appendChild(dayEl);
+    if (prod>0) {
+      const pct = Math.min((prod/DAILY_GOAL)*100,100);
+      const color = above?'#16a34a':'#dc2626';
+      const valEl = document.createElement('div');
+      valEl.style.cssText = `font-size:10px;font-weight:700;color:${color};margin-top:5px;`;
+      valEl.textContent = '$'+(prod/1000).toFixed(1)+'k';
+      el.appendChild(valEl);
+      const hint = document.createElement('div');
+      hint.style.cssText = `font-size:8px;color:${color};opacity:.8;`;
+      hint.textContent = above ? '✓ above goal' : '-$'+((DAILY_GOAL-prod)/1000).toFixed(1)+'k';
+      el.appendChild(hint);
+      const bar = document.createElement('div');
+      bar.style.cssText = 'position:absolute;bottom:0;left:0;right:0;height:3px;background:#e5e3df;border-radius:0;';
+      const fill = document.createElement('div');
+      fill.style.cssText = `width:${pct}%;height:100%;background:${color};transition:width .4s;`;
+      bar.appendChild(fill);
+      el.appendChild(bar);
+    } else if (!isFuture && !isWeekend) {
+      const nd = document.createElement('div');
+      nd.style.cssText = 'font-size:9px;color:#D4D2CB;margin-top:4px;';
+      nd.textContent = 'No data';
+      el.appendChild(nd);
+    }
+    grid.appendChild(el);
+  }
+}
+
+const PROVIDERS = [
+  {name:'Dr. Patel',av:'SP',cls:'av-g',prod:14820,goal:18000},
+  {name:'Dr. Lee',av:'JL',cls:'av-b',prod:7898,goal:16000},
+  {name:'Maria R. (Hygiene)',av:'MR',cls:'av-a',prod:3840,goal:6000},
+];
+function buildProviders() {
+  const el = document.getElementById('prov-list');
+  PROVIDERS.forEach(p => {
+    const pct = Math.round((p.prod/p.goal)*100);
+    const color = pct>=75?'#1A9E72':pct>=50?'#F0A020':'#E84040';
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(0,0,0,.07)';
+    row.innerHTML = `
+      <div class="av ${p.cls}">${p.av}</div>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+          <span style="font-size:11px;font-weight:600">${p.name}</span>
+          <span style="font-size:11px;font-weight:700">$${(p.prod/1000).toFixed(1)}k</span>
+        </div>
+        <div class="pw" style="height:5px"><div class="pf" style="width:${Math.min(pct,100)}%;background:${color};height:100%"></div></div>
+        <div style="font-size:9px;color:#9A9890;margin-top:2px">${pct}% of $${(p.goal/1000).toFixed(0)}k goal</div>
+      </div>`;
+    el.appendChild(row);
+  });
+}
+
+document.querySelectorAll('.stab').forEach(t => {
+  t.addEventListener('click', () => {
+    t.closest('.subtabs').querySelectorAll('.stab').forEach(s=>s.classList.remove('active'));
+    t.classList.add('active');
+  });
+});
+
+buildCalendar();
+buildProviders();
+</script>
+</body>
+</html>
