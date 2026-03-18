@@ -5,6 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:client": "vite",
+    "dev:api": "node --env-file=.env.local --env-file=.env server/index.mjs",
+    "dev:full": "node scripts/dev-full.mjs",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview"
   },

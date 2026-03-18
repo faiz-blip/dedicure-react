@@ -40,16 +40,14 @@ function isPdfFile(filePath: string) {
 
 function documentText(doc: ImagingDocument) {
   return [
-    pickFirst(doc.Description, doc.description),
-    pickFirst(doc.FileName, doc.fileName),
-    pickFirst(doc.ImgType, doc.imgType),
-    pickFirst(doc.Category, doc.category),
-    pickFirst((doc as ImagingDocument & { docCategory?: string }).docCategory),
-  ].join(' ').toLowerCase()
+    doc.Description,
+    doc.filePath,
+    doc.docCategory,
+  ].filter(Boolean).join(' ').toLowerCase()
 }
 
 function documentCategory(doc: ImagingDocument) {
-  return pickFirst((doc as ImagingDocument & { docCategory?: string }).docCategory, doc.Category, doc.category).toLowerCase()
+  return (doc.docCategory ?? '').toLowerCase()
 }
 
 function isMountRecord(doc: ImagingDocument) {
@@ -59,7 +57,7 @@ function isMountRecord(doc: ImagingDocument) {
 function isLikelyXray(doc: ImagingDocument) {
   const category = documentCategory(doc)
   const text = documentText(doc)
-  const filePath = pickFirst(doc.FilePath, doc.filePath)
+  const filePath = doc.filePath ?? ''
 
   if (isMountRecord(doc)) return true
   if (XRAY_CATEGORIES.has(category)) return true
@@ -68,7 +66,7 @@ function isLikelyXray(doc: ImagingDocument) {
 }
 
 function formatDocDate(doc: ImagingDocument) {
-  const raw = pickFirst(doc.DateCreated, doc.DateTimeCreated, doc.DateTStamp)
+  const raw = pickFirst(doc.DateCreated, doc.DateTStamp)
   if (!raw || raw.startsWith('0001')) return 'Unknown date'
   const parsed = new Date(raw)
   return Number.isNaN(parsed.getTime()) ? raw : parsed.toLocaleDateString()
@@ -94,34 +92,40 @@ function tagColor(tag: string) {
 }
 
 function buildViewerImage(doc: ImagingDocument): ViewerImage {
-  const title = pickFirst(doc.Description, doc.description, doc.FileName, doc.fileName) || 'Open Dental image'
-  const filePath = pickFirst(doc.FilePath, doc.filePath)
+  const title = doc.Description || 'Open Dental image'
+  const filePath = doc.filePath ?? ''
   const mountRecord = isMountRecord(doc)
+
+  // DocNum and MountNum come as strings from OD API (e.g. "1004", "0")
+  // For mount records DocNum is "0" (truthy string!), so check MountNum first
+  const id = mountRecord
+    ? `mount-${doc.MountNum}`
+    : String(doc.DocNum ?? `${title}-${filePath}`)
 
   let previewUrl: string | null = null
   let previewKind: PreviewKind = 'none'
 
-  if (mountRecord) {
-    previewUrl = backendUrl(`/api/od-mount?mountNum=${encodeURIComponent(String(doc.MountNum ?? ''))}&description=${encodeURIComponent(title)}`)
-    previewKind = 'mount'
-  } else if (filePath && isImageFile(filePath)) {
+  if (filePath && isImageFile(filePath)) {
     previewUrl = backendUrl(`/api/od-image?path=${encodeURIComponent(filePath)}`)
     previewKind = 'image'
   } else if (filePath && isPdfFile(filePath)) {
     previewUrl = backendUrl(`/api/od-image?path=${encodeURIComponent(filePath)}`)
     previewKind = 'pdf'
+  } else if (mountRecord) {
+    previewUrl = backendUrl(`/api/od-mount?mountNum=${encodeURIComponent(String(doc.MountNum ?? ''))}&description=${encodeURIComponent(title)}`)
+    previewKind = 'mount'
   }
 
   return {
-    id: String(doc.DocNum ?? doc.MountNum ?? `${title}-${filePath}`),
+    id,
     title,
     date: formatDocDate(doc),
-    provider: pickFirst((doc as ImagingDocument & { docCategory?: string }).docCategory, doc.Category, doc.category, doc.ImgType, doc.imgType) || 'Open Dental',
-    notes: pickFirst(doc.Description, doc.description) || 'No imaging note provided.',
+    provider: doc.docCategory || 'Open Dental',
+    notes: doc.Description || doc.Note || 'No imaging note provided.',
     tag: inferTag(doc),
     previewUrl,
     filePath,
-    tooth: pickFirst(doc.ToothNums, doc.toothNums),
+    tooth: doc.ToothNumbers ?? '',
     isMount: mountRecord,
     previewKind,
   }
