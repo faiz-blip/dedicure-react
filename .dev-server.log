@@ -1,0 +1,32 @@
+
+> dedicure-react@0.1.0 dev
+> vite
+
+
+  [32m[1mVITE[22m v5.4.21[39m  [2mready in [0m[1m374[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m3005[22m/[39m
+[2m6:11:42 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Charting.tsx[22m
+[2m6:12:49 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Charting.tsx[22m
+[2m6:14:36 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Charting.tsx[22m
+[2m6:15:28 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Charting.tsx[22m
+[2m6:20:59 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Patients.tsx[22m
+[2m6:21:42 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Schedule.tsx[22m
+[2m6:22:26 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Recall.tsx[22m
+[2m6:23:50 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Schedule.tsx[22m
+[2m6:23:50 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Recall.tsx[22m
+[2m6:24:35 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Recall.tsx[22m
+[2m6:26:30 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Recall.tsx[22m
+[2m6:31:32 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Charting.tsx[22m
+[2m6:34:29 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Charting.tsx[22m
+[2m6:37:39 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Charting.tsx[22m
+[2m6:44:51 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Charting.tsx[22m
+[2m6:49:42 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Charting.tsx[22m
+[2m6:53:53 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Charting.tsx[22m
+[2m7:02:22 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Imaging.tsx[22m
+[2m7:07:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Imaging.tsx[22m
+[2m7:13:29 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Imaging.tsx[22m
+[2m7:16:43 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Imaging.tsx[22m
+[2m7:17:09 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Imaging.tsx[22m
+[2m7:17:16 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Imaging.tsx[22m
+[2m7:18:29 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/screens/Imaging.tsx[22m

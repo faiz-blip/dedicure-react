@@ -1,0 +1,134 @@
+[2m6:11:42 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\src\screens\Charting.tsx: Nullish coalescing operator(??) requires parens when mixing with logical operators. (67:56)
+
+[0m [90m 65 |[31m     id[33m:[31m proc[33m.[31m[33mProcNum[31m[33m,[31m
+ [90m 66 |[31m     tooth[33m:[31m proc[33m.[31m[33mToothNum[31m [33m?[31m [32m`#${proc.ToothNum}`[31m [33m:[31m [32m'General'[31m[33m,[31m
+[31m[1m>[22m[31m[90m 67 |[31m     description[33m:[31m proc[33m.[31m[33mDescript[31m [33m?[31m[33m?[31m proc[33m.[31mdescript [33m?[31m[33m?[31m code [33m||[31m [32m'Procedure'[31m[33m,[31m
+ [90m    |[31m                                                         [31m[1m^[22m[31m
+ [90m 68 |[31m     code[33m:[31m code [33m||[31m [32m'N/A'[31m[33m,[31m
+ [90m 69 |[31m     date[33m:[31m proc[33m.[31m[33mProcDate[31m [33m&&[31m [33m![31mproc[33m.[31m[33mProcDate[31m[33m.[31mstartsWith([32m'0001'[31m) [33m?[31m [36mnew[31m [33mDate[31m(proc[33m.[31m[33mProcDate[31m)[33m.[31mtoLocaleDateString() [33m:[31m [32m''[31m[33m,[31m
+ [90m 70 |[31m     surface[33m:[31m proc[33m.[31m[33mSurf[31m [33m||[31m [32m''[31m[33m,[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/faizk/.gemini/antigravity/scratch/dedicure-react/src/screens/Charting.tsx[39m:67:56
+[33m  65 |      id: proc.ProcNum,
+  66 |      tooth: proc.ToothNum ? `#${proc.ToothNum}` : 'General',
+  67 |      description: proc.Descript ?? proc.descript ?? code || 'Procedure',
+     |                                                          ^
+  68 |      code: code || 'N/A',
+  69 |      date: proc.ProcDate && !proc.ProcDate.startsWith('0001') ? new Date(proc.ProcDate).toLocaleDateString() : '',[39m
+      at constructor (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:365:19)
+      at TypeScriptParserMixin.raise (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:6599:19)
+      at TypeScriptParserMixin.parseExprOp (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10951:22)
+      at TypeScriptParserMixin.parseExprOp (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:9306:18)
+      at TypeScriptParserMixin.parseExprOp (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10953:21)
+      at TypeScriptParserMixin.parseExprOp (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:9306:18)
+      at TypeScriptParserMixin.parseExprOps (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10908:17)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10881:23)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10831:21)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:9786:20)
+      at C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10800:39
+      at TypeScriptParserMixin.allowInAnd (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:12426:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10800:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:12493:17)
+      at TypeScriptParserMixin.parseObjectProperty (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:11950:83)
+      at TypeScriptParserMixin.parseObjPropValue (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:11978:100)
+      at TypeScriptParserMixin.parseObjPropValue (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:9744:18)
+      at TypeScriptParserMixin.parsePropertyDefinition (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:11915:17)
+      at TypeScriptParserMixin.parseObjectLike (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:11832:21)
+      at TypeScriptParserMixin.parseExprAtom (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:11339:23)
+      at TypeScriptParserMixin.parseExprAtom (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:4764:20)
+      at TypeScriptParserMixin.parseExprSubscripts (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:11081:23)
+      at TypeScriptParserMixin.parseUpdate (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:11066:21)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:11046:23)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:9837:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10899:61)
+      at TypeScriptParserMixin.parseExprOps (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10904:23)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10881:23)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10831:21)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:9786:20)
+      at TypeScriptParserMixin.parseExpressionBase (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10784:23)
+      at C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10780:39
+      at TypeScriptParserMixin.allowInAnd (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:12421:16)
+      at TypeScriptParserMixin.parseExpression (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10780:17)
+      at TypeScriptParserMixin.parseReturnStatement (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:13142:28)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:12798:21)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:9508:18)
+      at TypeScriptParserMixin.parseStatementLike (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:12767:17)
+      at TypeScriptParserMixin.parseStatementListItem (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:12747:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:13316:61)
+      at TypeScriptParserMixin.parseBlockBody (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:13309:10)
+      at TypeScriptParserMixin.parseBlock (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:13297:10)
+      at TypeScriptParserMixin.parseFunctionBody (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:12100:24)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:12086:10)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:9172:18)
+      at C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:13445:12
+      at TypeScriptParserMixin.withSmartMixTopicForbiddingContext (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:12403:14)
+      at TypeScriptParserMixin.parseFunction (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:13444:10)
+      at TypeScriptParserMixin.parseFunctionStatement (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:13125:17)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:12791:21)
+[2m6:11:42 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\src\screens\Charting.tsx: Nullish coalescing operator(??) requires parens when mixing with logical operators. (67:56)
+
+[0m [90m 65 |[31m     id[33m:[31m proc[33m.[31m[33mProcNum[31m[33m,[31m
+ [90m 66 |[31m     tooth[33m:[31m proc[33m.[31m[33mToothNum[31m [33m?[31m [32m`#${proc.ToothNum}`[31m [33m:[31m [32m'General'[31m[33m,[31m
+[31m[1m>[22m[31m[90m 67 |[31m     description[33m:[31m proc[33m.[31m[33mDescript[31m [33m?[31m[33m?[31m proc[33m.[31mdescript [33m?[31m[33m?[31m code [33m||[31m [32m'Procedure'[31m[33m,[31m
+ [90m    |[31m                                                         [31m[1m^[22m[31m
+ [90m 68 |[31m     code[33m:[31m code [33m||[31m [32m'N/A'[31m[33m,[31m
+ [90m 69 |[31m     date[33m:[31m proc[33m.[31m[33mProcDate[31m [33m&&[31m [33m![31mproc[33m.[31m[33mProcDate[31m[33m.[31mstartsWith([32m'0001'[31m) [33m?[31m [36mnew[31m [33mDate[31m(proc[33m.[31m[33mProcDate[31m)[33m.[31mtoLocaleDateString() [33m:[31m [32m''[31m[33m,[31m
+ [90m 70 |[31m     surface[33m:[31m proc[33m.[31m[33mSurf[31m [33m||[31m [32m''[31m[33m,[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/faizk/.gemini/antigravity/scratch/dedicure-react/src/screens/Charting.tsx[39m:67:56
+[33m  65 |      id: proc.ProcNum,
+  66 |      tooth: proc.ToothNum ? `#${proc.ToothNum}` : 'General',
+  67 |      description: proc.Descript ?? proc.descript ?? code || 'Procedure',
+     |                                                          ^
+  68 |      code: code || 'N/A',
+  69 |      date: proc.ProcDate && !proc.ProcDate.startsWith('0001') ? new Date(proc.ProcDate).toLocaleDateString() : '',[39m
+      at constructor (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:365:19)
+      at TypeScriptParserMixin.raise (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:6599:19)
+      at TypeScriptParserMixin.parseExprOp (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10951:22)
+      at TypeScriptParserMixin.parseExprOp (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:9306:18)
+      at TypeScriptParserMixin.parseExprOp (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10953:21)
+      at TypeScriptParserMixin.parseExprOp (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:9306:18)
+      at TypeScriptParserMixin.parseExprOps (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10908:17)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10881:23)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10831:21)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:9786:20)
+      at C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10800:39
+      at TypeScriptParserMixin.allowInAnd (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:12426:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10800:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:12493:17)
+      at TypeScriptParserMixin.parseObjectProperty (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:11950:83)
+      at TypeScriptParserMixin.parseObjPropValue (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:11978:100)
+      at TypeScriptParserMixin.parseObjPropValue (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:9744:18)
+      at TypeScriptParserMixin.parsePropertyDefinition (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:11915:17)
+      at TypeScriptParserMixin.parseObjectLike (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:11832:21)
+      at TypeScriptParserMixin.parseExprAtom (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:11339:23)
+      at TypeScriptParserMixin.parseExprAtom (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:4764:20)
+      at TypeScriptParserMixin.parseExprSubscripts (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:11081:23)
+      at TypeScriptParserMixin.parseUpdate (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:11066:21)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:11046:23)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:9837:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10899:61)
+      at TypeScriptParserMixin.parseExprOps (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10904:23)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10881:23)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10831:21)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:9786:20)
+      at TypeScriptParserMixin.parseExpressionBase (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10784:23)
+      at C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10780:39
+      at TypeScriptParserMixin.allowInAnd (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:12421:16)
+      at TypeScriptParserMixin.parseExpression (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:10780:17)
+      at TypeScriptParserMixin.parseReturnStatement (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:13142:28)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:12798:21)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:9508:18)
+      at TypeScriptParserMixin.parseStatementLike (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:12767:17)
+      at TypeScriptParserMixin.parseStatementListItem (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:12747:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:13316:61)
+      at TypeScriptParserMixin.parseBlockBody (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:13309:10)
+      at TypeScriptParserMixin.parseBlock (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:13297:10)
+      at TypeScriptParserMixin.parseFunctionBody (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:12100:24)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:12086:10)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:9172:18)
+      at C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:13445:12
+      at TypeScriptParserMixin.withSmartMixTopicForbiddingContext (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:12403:14)
+      at TypeScriptParserMixin.parseFunction (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:13444:10)
+      at TypeScriptParserMixin.parseFunctionStatement (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:13125:17)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\faizk\.gemini\antigravity\scratch\dedicure-react\node_modules\@babel\parser\lib\index.js:12791:21)

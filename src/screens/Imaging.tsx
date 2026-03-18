@@ -308,7 +308,7 @@ export default function Imaging() {
           {selectedImage && (
             <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 220px', gap: 14 }}>
               <div>
-                <div style={{ background: '#0a0f1a', border: '1px solid #1d2a3c', borderRadius: 14, minHeight: 360, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', position: 'relative' }}>
+                <div style={{ background: '#0a0f1a', border: '1px solid #1d2a3c', borderRadius: 14, height: 360, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', position: 'relative' }}>
                   {(selectedImage.previewKind === 'image' || selectedImage.previewKind === 'mount') && selectedImage.previewUrl ? (
                     <img
                       src={selectedImage.previewUrl}
