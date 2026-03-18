@@ -1,7 +1,8 @@
 'use client'
-import React, { useState, MouseEvent } from 'react'
+import React, { useMemo, useState, MouseEvent } from 'react'
 import { useAppointments, Appointment } from '@/hooks/useAppointments'
 import { usePatients } from '@/hooks/usePatients'
+import { scorePatientSearch } from '@/lib/patientSearch'
 
 const HOURS = Array.from({ length: 11 }, (_, i) => i + 7) // 7 AM  5 PM
 
@@ -94,6 +95,7 @@ export default function Schedule() {
   // Interactive UI states
   const [selectedAppt, setSelectedAppt] = useState<Appointment | null>(null)
   const [showNewApptModal, setShowNewApptModal] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
 
   const focusDay = addDays(weekStart, dayOffset)
   const start = view === 'week' ? dateStr(weekStart) : dateStr(focusDay)
@@ -101,13 +103,39 @@ export default function Schedule() {
 
   const { appointments, isLoading } = useAppointments(start, end)
   const { patients } = usePatients(500)
+  const patientMap = useMemo(() => new Map((patients ?? []).map((patient) => [patient.PatNum, patient])), [patients])
 
   const getPatientName = (apt: Appointment) => {
     if (apt.PatientName) return apt.PatientName
-    const p = patients?.find(pat => pat.PatNum === apt.PatNum)
+    const p = patientMap.get(apt.PatNum)
     if (p) return `${p.FName} ${p.Preferred ? `"${p.Preferred}" ` : ''}${p.LName}`
     return `Pat #${apt.PatNum}`
   }
+
+  const displayedAppointments = useMemo(() => {
+    const allAppointments = appointments ?? []
+    if (!searchQuery.trim()) return allAppointments
+
+    return allAppointments
+      .map((apt: Appointment) => {
+        const patient = patientMap.get(apt.PatNum)
+        return {
+          apt,
+          score: scorePatientSearch(searchQuery, {
+            fullName: getPatientName(apt),
+            firstName: patient?.FName,
+            lastName: patient?.LName,
+            chartNumber: patient?.ChartNumber,
+            phone: [patient?.WirelessPhone, patient?.HmPhone, patient?.WkPhone].filter(Boolean).join(' '),
+            email: patient?.Email,
+            birthdate: patient?.Birthdate,
+          }),
+        }
+      })
+      .filter((entry) => entry.score >= 0)
+      .sort((a, b) => b.score - a.score || new Date(a.apt.AptDateTime).getTime() - new Date(b.apt.AptDateTime).getTime())
+      .map((entry) => entry.apt)
+  }, [appointments, searchQuery, patientMap])
 
   const days = view === 'week'
     ? Array.from({ length: 5 }, (_, i) => addDays(weekStart, i))
@@ -117,7 +145,7 @@ export default function Schedule() {
   const columns = view === 'week' ? days.map(d => ({ type: 'day' as const, day: d })) : DAY_CATEGORIES.map(c => ({ type: 'category' as const, category: c, day: focusDay }))
 
   const aptsForCol = (col: typeof columns[0]) =>
-    (appointments ?? []).filter(a => {
+    displayedAppointments.filter(a => {
       if (!a.AptDateTime || a.AptDateTime.startsWith('0001')) return false
       // Match day
       if (!a.AptDateTime.startsWith(dateStr(col.day))) return false
@@ -139,10 +167,10 @@ export default function Schedule() {
     setDayOffset(new Date().getDay() - 1)
   }
 
-  const totalToday = (appointments ?? []).filter(a => a.AptDateTime?.startsWith(dateStr(today))).length
-  const scheduled  = (appointments ?? []).filter(a => a.AptStatus === 'Scheduled').length
-  const complete   = (appointments ?? []).filter(a => a.AptStatus === 'Complete').length
-  const broken     = (appointments ?? []).filter(a => a.AptStatus === 'Broken').length
+  const totalToday = displayedAppointments.filter(a => a.AptDateTime?.startsWith(dateStr(today))).length
+  const scheduled  = displayedAppointments.filter(a => a.AptStatus === 'Scheduled').length
+  const complete   = displayedAppointments.filter(a => a.AptStatus === 'Complete').length
+  const broken     = displayedAppointments.filter(a => a.AptStatus === 'Broken').length
 
   return (
     <>
@@ -179,7 +207,16 @@ export default function Schedule() {
             <button className="btn btn-sm" onClick={nextWeek}></button>
             <button className="btn btn-sm" onClick={goToday}>Today</button>
           </div>
-          <div className="subtabs" style={{ marginLeft: 'auto' }}>
+          <div className="search-wrap" style={{ width: 260, marginLeft: 'auto' }}>
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="var(--text3)" strokeWidth="1.5" strokeLinecap="round"><circle cx="5.5" cy="5.5" r="4" /><line x1="9" y1="9" x2="12" y2="12" /></svg>
+            <input
+              type="text"
+              placeholder="Search patient or chart #..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+          <div className="subtabs">
             <div className={`stab${view === 'day' ? ' active' : ''}`} onClick={() => setView('day')}>Day</div>
             <div className={`stab${view === 'week' ? ' active' : ''}`} onClick={() => setView('week')}>Week</div>
           </div>
@@ -319,9 +356,9 @@ export default function Schedule() {
             Loading appointments from OpenDental...
           </div>
         )}
-        {!isLoading && (appointments ?? []).length === 0 && (
+        {!isLoading && displayedAppointments.length === 0 && (
           <div style={{ textAlign: 'center', padding: '30px 0', fontSize: 12, color: 'var(--text3)' }}>
-            No appointments found for this period.
+            {searchQuery.trim() ? 'No appointments found for that patient search.' : 'No appointments found for this period.'}
           </div>
         )}
 
@@ -419,4 +456,6 @@ export default function Schedule() {
     </>
   )
 }
+
+
 

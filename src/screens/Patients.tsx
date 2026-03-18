@@ -1,6 +1,7 @@
 'use client'
 import { useState, useMemo } from 'react'
 import { usePatients, Patient } from '@/hooks/usePatients'
+import { formatPatientSearchName, formatPatientSearchPhone, scorePatientSearch } from '@/lib/patientSearch'
 
 const STATUS_BADGE: Record<string, string> = {
   'Active': 'bg', 'New Patient': 'bb', 'Perio Active': 'ba', 'Recall Due': 'br', 'Inactive': 'bx'
@@ -29,8 +30,8 @@ export default function Patients() {
     return age
   }
 
-  const formatName = (p: Patient) => `${p.FName}${p.Preferred ? ` "${p.Preferred}"` : ''} ${p.LName}`.trim()
-  const formatPhone = (p: Patient) => p.WirelessPhone || p.HmPhone || p.WkPhone || 'No Phone'
+  const formatName = (p: Patient) => formatPatientSearchName(p)
+  const formatPhone = (p: Patient) => formatPatientSearchPhone(p) || 'No Phone'
   const formatDate = (dateStr: string) => {
     if (!dateStr || dateStr.startsWith('0001')) return ''
     return new Date(dateStr).toLocaleDateString()
@@ -38,31 +39,36 @@ export default function Patients() {
 
   const allPatients = patients ?? []
   const totalPatients = allPatients.length
-  const now = new Date()
-  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0]
-  // OD returns PatStatus field â€” "Patient" is active
   const activePatients = allPatients.filter((p) => (p as Patient & { PatStatus?: string }).PatStatus === 'Patient').length || Math.round(totalPatients * 0.85)
 
   const filteredPatients = useMemo(() => {
     if (!patients) return []
     let filtered = patients
     
-    if (searchQuery) {
-      const q = searchQuery.toLowerCase()
-      filtered = filtered.filter(p => 
-        formatName(p).toLowerCase().includes(q) || 
-        formatPhone(p).includes(q) ||
-        (p.ChartNumber && p.ChartNumber.toLowerCase().includes(q))
-      )
+    if (activeTab === 'New') {
+      filtered = filtered.filter((_, i) => i % 5 === 0)
+    } else if (activeTab === 'Recall Due') {
+      filtered = filtered.filter((_, i) => i % 6 === 0)
     }
 
-    if (activeTab === 'New') {
-       filtered = filtered.filter((_, i) => i % 5 === 0) 
-    } else if (activeTab === 'Recall Due') {
-       filtered = filtered.filter((_, i) => i % 6 === 0)
-    }
+    if (!searchQuery.trim()) return filtered
 
     return filtered
+      .map((patient) => ({
+        patient,
+        score: scorePatientSearch(searchQuery, {
+          fullName: formatName(patient),
+          firstName: patient.FName,
+          lastName: patient.LName,
+          chartNumber: patient.ChartNumber,
+          phone: formatPhone(patient),
+          email: patient.Email,
+          birthdate: patient.Birthdate,
+        }),
+      }))
+      .filter((entry) => entry.score >= 0)
+      .sort((a, b) => b.score - a.score || a.patient.LName.localeCompare(b.patient.LName) || a.patient.FName.localeCompare(b.patient.FName))
+      .map((entry) => entry.patient)
   }, [patients, searchQuery, activeTab])
 
   return (
@@ -83,8 +89,8 @@ export default function Patients() {
       </div>
 
       <div className="g4">
-        <div className="metric"><div className="m-lbl">Total Patients</div><div className="m-val">{isLoading ? 'â€¦' : totalPatients.toLocaleString()}</div></div>
-        <div className="metric"><div className="m-lbl">Active (12 mo)</div><div className="m-val">{isLoading ? 'â€¦' : activePatients.toLocaleString()}</div></div>
+        <div className="metric"><div className="m-lbl">Total Patients</div><div className="m-val">{isLoading ? '…' : totalPatients.toLocaleString()}</div></div>
+        <div className="metric"><div className="m-lbl">Active (12 mo)</div><div className="m-val">{isLoading ? '…' : activePatients.toLocaleString()}</div></div>
         <div className="metric"><div className="m-lbl">New This Month</div><div className="m-val up">23</div></div>
         <div className="metric"><div className="m-lbl">Overdue Recall</div><div className="m-val dn">47</div></div>
       </div>
@@ -149,5 +155,3 @@ export default function Patients() {
     </>
   )
 }
-
-
